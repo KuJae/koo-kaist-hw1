@@ -1,0 +1,26 @@
+# ── 프론트엔드 (Node) ──
+node_modules/
+dist/
+dist-ssr/
+*.local
+.vercel
+
+# ── 백엔드 (Python) ──
+.venv/
+__pycache__/
+*.py[cod]
+
+# ── 데이터베이스 파일 (각자 컴퓨터에서 생성된다) ──
+*.db
+
+# ── 환경변수 (주소·키가 들어가므로 저장소에 올리지 않는다) ──
+.env
+.env.*
+!.env.example
+
+# ── 에디터 · OS ──
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.log

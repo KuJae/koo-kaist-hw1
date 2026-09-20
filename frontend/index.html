@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>강재구 · 개인 소개</title>
+    <meta name="description" content="KAIST 디지털금융MBA 강재구의 개인 소개 페이지 — 클라우드컴퓨팅실습 개인과제" />
+    <style>
+      :root {
+        --bg: #f7f8fa;
+        --card: #ffffff;
+        --text: #1a1d21;
+        --muted: #646b75;
+        --border: #e4e7eb;
+        --accent: #2f6fed;
+        --accent-soft: rgba(47, 111, 237, 0.1);
+        --shadow: 0 1px 2px rgba(16, 24, 40, 0.04), 0 8px 24px rgba(16, 24, 40, 0.06);
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #14161a;
+          --card: #1c1f24;
+          --text: #e9ecef;
+          --muted: #9aa3ad;
+          --border: #2b2f36;
+          --accent: #6b9bff;
+          --accent-soft: rgba(107, 155, 255, 0.14);
+          --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.35);
+        }
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        padding: 56px 16px 72px;
+        background: var(--bg);
+        color: var(--text);
+        font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo",
+          Pretendard, "Segoe UI", system-ui, sans-serif;
+        line-height: 1.65;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .wrap { max-width: 720px; margin: 0 auto; }
+
+      /* ── 헤더 ── */
+      header { margin-bottom: 36px; }
+      .eyebrow {
+        display: inline-block;
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        color: var(--accent);
+        background: var(--accent-soft);
+        padding: 4px 10px;
+        border-radius: 999px;
+        margin-bottom: 14px;
+      }
+      h1 {
+        margin: 0 0 10px;
+        font-size: 38px;
+        line-height: 1.25;
+        letter-spacing: -0.025em;
+        font-weight: 700;
+      }
+      h1 .en { color: var(--muted); font-size: 22px; font-weight: 500; letter-spacing: 0; }
+      .tagline { margin: 0; font-size: 17px; color: var(--muted); }
+
+      .links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+      .links a {
+        font-size: 14px;
+        color: var(--text);
+        text-decoration: none;
+        border: 1px solid var(--border);
+        background: var(--card);
+        border-radius: 8px;
+        padding: 6px 12px;
+        transition: border-color 0.15s, color 0.15s;
+      }
+      .links a:hover { border-color: var(--accent); color: var(--accent); }
+
+      /* ── 카드 ── */
+      section.card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 22px 24px;
+        margin-bottom: 18px;
+        box-shadow: var(--shadow);
+      }
+      h2 {
+        margin: 0 0 14px;
+        font-size: 13px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.09em;
+        color: var(--muted);
+      }
+      p { margin: 0 0 12px; }
+      p:last-child { margin-bottom: 0; }
+
+      /* 태그 */
+      .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+      .tags span {
+        font-size: 14px;
+        padding: 5px 11px;
+        border-radius: 8px;
+        background: var(--accent-soft);
+        color: var(--accent);
+        font-weight: 500;
+      }
+
+      /* 목록 */
+      dl { margin: 0; }
+      dl > div {
+        display: flex;
+        gap: 16px;
+        padding: 11px 0;
+        border-bottom: 1px solid var(--border);
+      }
+      dl > div:first-child { padding-top: 0; }
+      dl > div:last-child { border-bottom: none; padding-bottom: 0; }
+      dt { flex: 0 0 132px; font-weight: 600; font-size: 15px; }
+      dd { margin: 0; flex: 1; color: var(--muted); font-size: 15px; }
+
+      /* ── 연동 실습 CTA ── */
+      .cta {
+        display: block;
+        text-decoration: none;
+        color: inherit;
+        background: var(--card);
+        border: 1px solid var(--accent);
+        border-radius: 14px;
+        padding: 22px 24px;
+        margin-bottom: 18px;
+        box-shadow: var(--shadow);
+        transition: transform 0.15s, box-shadow 0.15s;
+      }
+      .cta:hover { transform: translateY(-2px); box-shadow: 0 6px 28px rgba(47, 111, 237, 0.18); }
+      .cta h2 { color: var(--accent); }
+      .cta strong { display: block; font-size: 19px; margin-bottom: 6px; }
+      .cta .go { color: var(--accent); font-weight: 600; }
+      .cta small { display: block; color: var(--muted); font-size: 13px; margin-top: 10px; }
+
+      footer {
+        margin-top: 32px;
+        text-align: center;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      @media (max-width: 560px) {
+        body { padding: 36px 16px 56px; }
+        h1 { font-size: 30px; }
+        section.card, .cta { padding: 18px 18px; }
+        dl > div { flex-direction: column; gap: 2px; }
+        dt { flex: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <span class="eyebrow">KAIST 디지털금융MBA</span>
+        <h1>강재구 <span class="en">Jaegoo Kang</span></h1>
+        <p class="tagline">
+          금융업에서 일하며, 떠오른 아이디어를 직접 만들어 확인해 보는 것을 좋아합니다.
+        </p>
+        <nav class="links">
+          <a href="https://github.com/KuJae" target="_blank" rel="noopener">GitHub</a>
+        </nav>
+      </header>
+
+      <section class="card">
+        <h2>소개</h2>
+        <p>
+          금융업에서 일하면서, 머릿속에 있는 아이디어를 화면과 서버로 직접 만들어 보는 일에
+          재미를 붙였습니다. 잘 쓴 기획서 한 장보다 동작하는 화면 하나가 이야기를 훨씬 빨리
+          진전시킨다고 믿는 편입니다.
+        </p>
+        <p>
+          KAIST 디지털금융MBA에서 데이터·AI·클라우드를 공부하고 있습니다. 배운 것은 작게라도
+          끝까지 배포해 봐야 남는다고 생각해서, 결제 인증 체크인 서비스나 가계부, 출근길 지하철
+          알림처럼 제 주변의 불편에서 출발한 것들을 만들어 왔습니다.
+        </p>
+        <p>
+          이 페이지도 그 연습의 하나입니다. 소개 페이지는 정적 HTML로, 옆의 연동 실습 페이지는
+          React로 만들어 각각 Vercel과 Render에 올렸습니다.
+        </p>
+      </section>
+
+      <section class="card">
+        <h2>관심 분야</h2>
+        <div class="tags">
+          <span>핀테크</span>
+          <span>금융 데이터</span>
+          <span>LLM · RAG</span>
+          <span>클라우드 배포</span>
+          <span>사내 업무 자동화</span>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>지금 하고 있는 것</h2>
+        <dl>
+          <div>
+            <dt>일</dt>
+            <dd>금융업 재직 · 디지털 금융 분야</dd>
+          </div>
+          <div>
+            <dt>학업</dt>
+            <dd>KAIST 디지털금융MBA 재학</dd>
+          </div>
+          <div>
+            <dt>이번 학기</dt>
+            <dd>클라우드컴퓨팅실습 — 웹 기초부터 풀스택 배포까지</dd>
+          </div>
+        </dl>
+      </section>
+
+      <section class="card">
+        <h2>만들어 본 것들</h2>
+        <dl>
+          <div>
+            <dt>NH Pay 체크인</dt>
+            <dd>가맹점 결제 인증 기반 체크인 서비스 (Next.js · Firebase · 네이버 지도 API)</dd>
+          </div>
+          <div>
+            <dt>쩡꾸 재무비서</dt>
+            <dd>커플 공동 가계부 — 지출 기록과 월간 리포트 (Next.js · Firebase)</dd>
+          </div>
+          <div>
+            <dt>지하철 실시간 알림</dt>
+            <dd>서울시 공공 API로 출근길 열차 도착을 알려 주는 스크립트 (Python)</dd>
+          </div>
+          <div>
+            <dt>메모 앱</dt>
+            <dd>이번 과제 — React · FastAPI · SQLite로 만든 풀스택 3계층 연습</dd>
+          </div>
+        </dl>
+      </section>
+
+      <a class="cta" href="/app/">
+        <h2>프론트엔드 · 백엔드 연동 실습</h2>
+        <strong>📝 메모 앱 열어 보기</strong>
+        <span>
+          Vercel에 올린 React 화면이 Render에 올린 FastAPI를 호출하고, 그 결과를 화면에 보여 줍니다.
+          <span class="go">바로 가기 →</span>
+        </span>
+        <small>
+          백엔드가 Render 무료 플랜이라 한동안 접속이 없으면 잠듭니다.
+          첫 화면이 뜨는 데 30~60초 걸릴 수 있습니다.
+        </small>
+      </a>
+
+      <footer>클라우드컴퓨팅실습 개인과제 · 2026년 9월</footer>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,16 @@
+# Render Blueprint — 대시보드에서 New → Blueprint 로 이 파일을 읽히면
+# 아래 설정이 자동으로 채워진다. 수동으로 Web Service를 만들 때도 같은 값을 넣으면 된다.
+services:
+  - type: web
+    name: koo-kaist-hw1-api
+    runtime: python
+    plan: free
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    # --host 0.0.0.0 이 없으면 외부에서 접근이 안 되고,
+    # --port 를 8000 같은 숫자로 고정하면 502가 난다($PORT를 그대로 써야 한다).
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      # 배포된 Vercel 주소를 끝에 / 없이 넣는다. 예: https://koo-kaist-hw1.vercel.app
+      - key: ALLOWED_ORIGINS
+        sync: false
