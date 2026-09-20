@@ -8,10 +8,10 @@ KAIST 클라우드컴퓨팅실습 개인과제입니다.
 
 | 구분 | 주소 |
 | --- | --- |
-| 개인 소개 페이지 (Vercel) | _배포 후 기입_ |
-| 연동 실습 페이지 | _배포 후 기입_ |
+| 개인 소개 페이지 (Vercel) | <https://koo-kaist-hw1.vercel.app> |
+| 연동 실습 페이지 | <https://koo-kaist-hw1.vercel.app/app/> |
 | 백엔드 Swagger UI (Render) | _배포 후 기입_ |
-| GitHub 저장소 | _배포 후 기입_ |
+| GitHub 저장소 | <https://github.com/KuJae/koo-kaist-hw1> |
 
 > 백엔드가 Render 무료 플랜이라 15분간 요청이 없으면 잠듭니다.
 > 첫 접속은 다시 깨어나는 데 **30~60초** 걸릴 수 있습니다(콜드 스타트).
@@ -20,7 +20,7 @@ KAIST 클라우드컴퓨팅실습 개인과제입니다.
 
 소개 페이지가 루트이고, 거기서 연동 실습 페이지로 이동합니다. 실습 페이지에서도 소개 페이지로 돌아옵니다.
 
-```
+```text
 /        개인 소개 페이지 (정적 HTML)      ──[ 메모 앱 열어 보기 → ]──┐
                                       ┌──[ ← 개인 소개로 돌아가기 ]──┘
 /app/    메모 앱 (React)  ────fetch────→  Render의 FastAPI  ──→  SQLite
@@ -38,7 +38,7 @@ KAIST 클라우드컴퓨팅실습 개인과제입니다.
 
 ## 주요 구성
 
-```
+```text
 .
 ├── frontend/              # → Vercel (Root Directory: frontend)
 │   ├── index.html         #   개인 소개 페이지 (정적 HTML, 빌드 진입점)
