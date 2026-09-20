@@ -11,8 +11,6 @@ export default function App() {
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
 
-  useEffect(() => { loadMemos(); }, []);   // 처음 뜰 때 서버에서 목록을 불러온다
-
   // 세 함수 모두 실패하면 화면에 이유를 보여 준다.
   // 그냥 두면 백엔드가 잠들었을 때 화면이 빈 채로 멈춘 것처럼 보인다.
   const run = async (job) => {
@@ -56,9 +54,15 @@ export default function App() {
     setMemos(await list.json());
   });
 
+  // 처음 뜰 때 서버에서 목록을 불러온다.
+  // (loadMemos 를 선언한 뒤에 둬야 초기화 전 참조 경고가 나지 않는다)
+  useEffect(() => { loadMemos(); }, []);
+
   return (
+    <>
+    <div className="blob" aria-hidden="true" />
     <div className="wrap">
-      <a className="back" href="/">← 개인 소개 페이지로 돌아가기</a>
+      <a className="back pill" href="/">← 개인 소개 페이지로 돌아가기</a>
 
       <h1>📝 메모장</h1>
       <p className="lede">
@@ -70,7 +74,7 @@ export default function App() {
         <a href={`${API_URL}/docs`} target="_blank" rel="noopener">Swagger UI 열기 ↗</a>
       </p>
 
-      <div className="card">
+      <div className="card glass">
         <div className="row">
           <input
             value={text}
@@ -112,5 +116,6 @@ export default function App() {
 
       <footer>React (Vercel) → FastAPI (Render) → SQLite</footer>
     </div>
+    </>
   );
 }

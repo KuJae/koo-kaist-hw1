@@ -1,0 +1,239 @@
+/* ============================================================
+   Liquid Glass — 두 페이지가 함께 쓰는 색 토큰과 유리 질감.
+     /      소개 페이지  → index.html 의 <link> 로 읽는다
+     /app/  메모 앱      → src/main.jsx 의 import 로 읽는다
+   ============================================================ */
+
+:root {
+  color-scheme: light dark;
+
+  /* 유리 뒤에서 번지는 배경 색 */
+  --blob-1: #6e8bff; /* 블루 */
+  --blob-2: #b06aff; /* 퍼플 */
+  --blob-3: #4ed8c0; /* 민트 */
+  --blob-alpha: 0.55;
+  --page-bg: #eef1f8;
+
+  /* 유리 패널 */
+  --glass-bg: rgba(255, 255, 255, 0.62);
+  --glass-bg-strong: rgba(255, 255, 255, 0.8);
+  --glass-brd: rgba(255, 255, 255, 0.72);
+  --glass-sheen: rgba(255, 255, 255, 0.45);
+  --glass-blur: 28px;
+  --glass-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.12),
+    0 20px 50px -20px rgba(16, 24, 40, 0.35);
+
+  /* 글자 */
+  --text: #10131a;
+  --muted: #545e6e;
+  --danger: #c0334b;
+
+  /* 강조 */
+  --accent: #2f6fed;
+  --accent-2: #7c5cff;
+  --accent-soft: rgba(47, 111, 237, 0.12);
+  --on-accent: #fff;
+
+  --radius: 26px;
+  --radius-sm: 14px;
+
+  --sans:
+    -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', Pretendard,
+    'Segoe UI', system-ui, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --blob-alpha: 0.4;
+    --page-bg: #0b0d12;
+
+    --glass-bg: rgba(30, 33, 41, 0.56);
+    --glass-bg-strong: rgba(30, 33, 41, 0.74);
+    --glass-brd: rgba(255, 255, 255, 0.14);
+    --glass-sheen: rgba(255, 255, 255, 0.13);
+    --glass-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.16),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.04),
+      0 24px 60px -24px rgba(0, 0, 0, 0.75);
+
+    --text: #f2f4f8;
+    --muted: #a7b0bd;
+    --danger: #ff8098;
+
+    --accent: #7fa6ff;
+    --accent-2: #b79cff;
+    --accent-soft: rgba(127, 166, 255, 0.16);
+    --on-accent: #0b0d12;
+  }
+}
+
+/* backdrop-filter 를 지원하지 않는 브라우저에서는 불투명하게 —
+   반투명만 남으면 글자가 배경에 묻힌다. */
+@supports not (
+  (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
+) {
+  :root {
+    --glass-bg: rgba(255, 255, 255, 0.93);
+    --glass-bg-strong: rgba(255, 255, 255, 0.97);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --glass-bg: rgba(30, 33, 41, 0.94);
+      --glass-bg-strong: rgba(30, 33, 41, 0.97);
+    }
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--page-bg);
+}
+
+/* body 에는 배경을 두지 않는다 —
+   배경을 깔면 z-index:-1 인 블롭이 body 배경 뒤로 숨어 안 보인다.
+   페이지 배경색은 위의 html 에만 둔다. */
+body {
+  margin: 0;
+  min-height: 100svh;
+  color: var(--text);
+  font-family: var(--sans);
+  line-height: 1.65;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── 배경 블롭 세 개 ──────────────────────────────────────────
+   fixed 라 스크롤해도 제자리에 있고, blur 로 경계를 지워
+   유리 패널 뒤에서 색이 은은하게 번지게 한다. */
+body::before,
+body::after,
+.blob {
+  content: '';
+  position: fixed;
+  z-index: -1;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: var(--blob-alpha);
+  pointer-events: none;
+}
+
+/* 본문은 블롭 위에 온다 (음수 z-index 를 못 쓰는 환경 대비) */
+.wrap {
+  position: relative;
+  z-index: 1;
+}
+
+body::before {
+  width: 52vmax;
+  height: 52vmax;
+  top: -16vmax;
+  left: -14vmax;
+  background: var(--blob-1);
+  animation: float-a 22s ease-in-out infinite;
+}
+
+body::after {
+  width: 46vmax;
+  height: 46vmax;
+  top: 16vmax;
+  right: -16vmax;
+  background: var(--blob-2);
+  animation: float-b 26s ease-in-out infinite;
+}
+
+.blob {
+  width: 44vmax;
+  height: 44vmax;
+  bottom: -18vmax;
+  left: 28%;
+  background: var(--blob-3);
+  animation: float-c 30s ease-in-out infinite;
+}
+
+@keyframes float-a {
+  50% {
+    transform: translate3d(6vmax, 4vmax, 0) scale(1.08);
+  }
+}
+@keyframes float-b {
+  50% {
+    transform: translate3d(-5vmax, 6vmax, 0) scale(1.1);
+  }
+}
+@keyframes float-c {
+  50% {
+    transform: translate3d(4vmax, -6vmax, 0) scale(0.94);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::before,
+  body::after,
+  .blob {
+    animation: none;
+  }
+}
+
+/* ── 유리 패널 ─────────────────────────────────────────────── */
+.glass {
+  position: relative;
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur)) saturate(180%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(180%);
+  border: 1px solid var(--glass-brd);
+  border-radius: var(--radius);
+  box-shadow: var(--glass-shadow);
+}
+
+/* 유리 윗면을 스치는 빛 */
+.glass::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  background: linear-gradient(160deg, var(--glass-sheen), transparent 42%);
+  pointer-events: none;
+}
+
+.glass > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── 알약 모양 유리 조각 (배지·링크·태그) ───────────────────── */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  font-size: 14px;
+  line-height: 1.4;
+  text-decoration: none;
+  color: var(--text);
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid var(--glass-brd);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  transition:
+    transform 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.2s ease,
+    color 0.2s ease;
+}
+
+a.pill:hover {
+  color: var(--accent);
+  transform: translateY(-1px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    0 8px 20px -10px rgba(47, 111, 237, 0.55);
+}

@@ -1,141 +1,129 @@
-/* 소개 페이지(index.html)와 같은 색·글꼴을 쓴다. */
-:root {
-  --bg: #f7f8fa;
-  --card: #ffffff;
-  --text: #1a1d21;
-  --muted: #646b75;
-  --border: #e4e7eb;
-  --accent: #2f6fed;
-  --accent-soft: rgba(47, 111, 237, 0.1);
-  --danger: #d1435b;
-  --ok: #16a34a;
-  --shadow: 0 1px 2px rgba(16, 24, 40, 0.04), 0 8px 24px rgba(16, 24, 40, 0.06);
-  color-scheme: light dark;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #14161a;
-    --card: #1c1f24;
-    --text: #e9ecef;
-    --muted: #9aa3ad;
-    --border: #2b2f36;
-    --accent: #6b9bff;
-    --accent-soft: rgba(107, 155, 255, 0.14);
-    --danger: #ff7b8f;
-    --ok: #4ade80;
-    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.35);
-  }
-}
-
-* {
-  box-sizing: border-box;
-}
+/* 메모 앱(/app/) 전용 레이아웃.
+   색 토큰과 유리 질감은 glass.css 에 있고, 소개 페이지와 공유한다. */
 
 body {
-  margin: 0;
-  padding: 56px 16px 72px;
-  background: var(--bg);
-  color: var(--text);
-  font-family: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo',
-    Pretendard, 'Segoe UI', system-ui, sans-serif;
-  line-height: 1.65;
-  -webkit-font-smoothing: antialiased;
+  padding: 56px 20px 80px;
 }
 
 .wrap {
-  max-width: 560px;
+  max-width: 580px;
   margin: 0 auto;
 }
 
-/* ── 소개 페이지로 돌아가는 링크 ── */
-.back {
-  display: inline-block;
+/* ── 소개 페이지로 돌아가는 링크 ──
+   glass.css 의 .pill 과 같은 순위라 로드 순서에 좌우되지 않도록
+   태그까지 붙여 우선순위를 높인다. */
+a.back {
+  margin-bottom: 22px;
   font-size: 14px;
   color: var(--muted);
-  text-decoration: none;
-  margin-bottom: 20px;
-}
-.back:hover {
-  color: var(--accent);
 }
 
 h1 {
-  margin: 0 0 6px;
-  font-size: 30px;
-  letter-spacing: -0.02em;
+  margin: 0 0 8px;
+  font-size: 32px;
+  letter-spacing: -0.025em;
   font-weight: 700;
 }
 
 .lede {
-  margin: 0 0 8px;
+  margin: 0 0 10px;
   color: var(--muted);
   font-size: 15px;
 }
 
 /* 지금 호출 중인 백엔드 주소를 눈으로 확인할 수 있게 표시한다. */
 .endpoint {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 22px;
   font-size: 12.5px;
   color: var(--muted);
-  margin: 0 0 24px;
-  word-break: break-all;
 }
 .endpoint code {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  background: var(--accent-soft);
+  font-family: var(--mono);
+  font-size: 12px;
+  word-break: break-all;
+  padding: 4px 9px;
+  border-radius: 8px;
   color: var(--accent);
-  border-radius: 5px;
-  padding: 2px 6px;
+  background: var(--accent-soft);
+}
+.endpoint a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+}
+.endpoint a:hover {
+  text-decoration: underline;
 }
 
 /* ── 카드 ── */
 .card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 20px;
-  box-shadow: var(--shadow);
+  padding: 22px;
 }
 
 /* ── 입력 ── */
 .row {
   display: flex;
-  gap: 8px;
+  gap: 10px;
 }
 .row input {
   flex: 1;
   min-width: 0;
-  padding: 10px 12px;
+  padding: 12px 14px;
   font: inherit;
   font-size: 15px;
   color: var(--text);
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 9px;
+  background: var(--glass-bg-strong);
+  border: 1px solid var(--glass-brd);
+  border-radius: 999px;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.row input::placeholder {
+  color: var(--muted);
 }
 .row input:focus {
-  outline: 2px solid var(--accent-soft);
+  outline: none;
   border-color: var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-soft);
 }
 .row button {
-  padding: 10px 18px;
+  flex-shrink: 0;
+  padding: 12px 22px;
   font: inherit;
   font-size: 15px;
   font-weight: 600;
-  color: #fff;
-  background: var(--accent);
+  color: var(--on-accent);
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
   border: none;
-  border-radius: 9px;
+  border-radius: 999px;
   cursor: pointer;
+  box-shadow: 0 10px 24px -12px var(--accent-2);
+  transition:
+    transform 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.2s ease;
+}
+.row button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 30px -12px var(--accent-2);
 }
 .row button:disabled {
-  opacity: 0.5;
+  opacity: 0.55;
   cursor: default;
+  box-shadow: none;
 }
 
 /* ── 상태 표시 ── */
 .status {
-  margin: 14px 0 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 16px 2px 0;
   font-size: 14px;
   color: var(--muted);
 }
@@ -143,50 +131,62 @@ h1 {
   color: var(--danger);
 }
 .status button {
-  padding: 6px 14px;
+  padding: 7px 16px;
   font: inherit;
   font-size: 14px;
+  font-weight: 500;
   color: var(--accent);
-  background: transparent;
+  background: var(--accent-soft);
+  /* color-mix 를 모르는 브라우저를 위해 단색을 먼저 둔다 */
   border: 1px solid var(--accent);
-  border-radius: 8px;
+  border-color: color-mix(in srgb, var(--accent) 32%, transparent);
+  border-radius: 999px;
   cursor: pointer;
+}
+.status button:hover {
+  background: color-mix(in srgb, var(--accent) 20%, transparent);
 }
 
 /* ── 목록 ── */
 ul {
   list-style: none;
-  margin: 16px 0 0;
+  margin: 18px 0 0;
   padding: 0;
 }
 li {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 12px 0;
-  border-top: 1px solid var(--border);
+  padding: 13px 14px;
+  margin-top: 8px;
+  border-radius: var(--radius-sm);
+  background: var(--glass-bg-strong);
+  border: 1px solid var(--glass-brd);
+}
+li .id {
+  flex-shrink: 0;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: var(--muted);
 }
 li .content {
   flex: 1;
   min-width: 0;
   word-break: break-word;
 }
-li .id {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  font-size: 12px;
-  color: var(--muted);
-  flex-shrink: 0;
-}
 li button {
   flex-shrink: 0;
-  padding: 5px 10px;
+  padding: 6px 12px;
   font: inherit;
   font-size: 13px;
   color: var(--muted);
   background: transparent;
-  border: 1px solid var(--border);
-  border-radius: 7px;
+  border: 1px solid var(--glass-brd);
+  border-radius: 999px;
   cursor: pointer;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease;
 }
 li button:hover {
   color: var(--danger);
@@ -194,8 +194,20 @@ li button:hover {
 }
 
 footer {
-  margin-top: 28px;
+  margin-top: 30px;
   text-align: center;
   color: var(--muted);
   font-size: 13px;
+}
+
+@media (max-width: 560px) {
+  body {
+    padding: 36px 16px 60px;
+  }
+  h1 {
+    font-size: 27px;
+  }
+  .card {
+    padding: 18px;
+  }
 }
