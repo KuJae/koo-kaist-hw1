@@ -10,7 +10,7 @@ KAIST 클라우드컴퓨팅실습 개인과제입니다.
 | --- | --- |
 | 개인 소개 페이지 (Vercel) | <https://koo-kaist-hw1.vercel.app> |
 | 연동 실습 페이지 | <https://koo-kaist-hw1.vercel.app/app/> |
-| 백엔드 Swagger UI (Render) | _배포 후 기입_ |
+| 백엔드 Swagger UI (Render) | <https://koo-kaist-hw1-api.onrender.com/docs> |
 | GitHub 저장소 | <https://github.com/KuJae/koo-kaist-hw1> |
 
 > 백엔드가 Render 무료 플랜이라 15분간 요청이 없으면 잠듭니다.
@@ -71,8 +71,8 @@ KAIST 클라우드컴퓨팅실습 개인과제입니다.
 
 | 변수 | 로컬 | 배포 |
 | --- | --- | --- |
-| `VITE_API_URL` (프론트) | `http://localhost:8000` | Render 백엔드 주소 |
-| `ALLOWED_ORIGINS` (백엔드) | `http://localhost:5173` | Vercel 프론트 주소 |
+| `VITE_API_URL` (프론트) | `http://localhost:8000` | `https://koo-kaist-hw1-api.onrender.com` |
+| `ALLOWED_ORIGINS` (백엔드) | `http://localhost:5173` | `https://koo-kaist-hw1.vercel.app` |
 | `DATABASE_URL` (백엔드) | 없음 → `sqlite:///./memo.db` | 없음 → 같은 기본값 |
 
 주소는 **끝에 `/` 없이** 넣습니다. `/`가 붙으면 CORS에서 출처가 달라 보여 요청이 막힙니다.
