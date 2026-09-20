@@ -19,6 +19,7 @@ KAIST 클라우드컴퓨팅실습 개인과제입니다.
 ## 화면 구성
 
 소개 페이지가 루트이고, 거기서 연동 실습 페이지로 이동합니다. 실습 페이지에서도 소개 페이지로 돌아옵니다.
+두 페이지는 `src/glass.css` 하나를 같이 써서 반투명 유리 느낌의 같은 디자인을 씁니다(라이트·다크 모두 대응).
 
 ```text
 /        개인 소개 페이지 (정적 HTML)      ──[ 메모 앱 열어 보기 → ]──┐
@@ -44,7 +45,8 @@ KAIST 클라우드컴퓨팅실습 개인과제입니다.
 │   ├── index.html         #   개인 소개 페이지 (정적 HTML, 빌드 진입점)
 │   ├── app/index.html     #   메모 앱 진입점
 │   ├── src/App.jsx        #   fetch로 백엔드를 호출하는 화면
-│   ├── src/index.css      #   소개 페이지와 같은 색·글꼴
+│   ├── src/glass.css      #   두 페이지가 공유하는 색 토큰·유리 질감
+│   ├── src/index.css      #   메모 앱 전용 레이아웃
 │   ├── vite.config.js     #   페이지 두 개(MPA) 빌드 설정
 │   └── .env.example       #   VITE_API_URL 예시
 ├── backend/               # → Render (Root Directory: backend)
@@ -124,6 +126,12 @@ npm run dev                        # http://localhost:5173
   `package.json`이 `"type": "module"`이라 `__dirname`을 쓸 수 없어 `import.meta.url`로 경로를 만들었다.
 - 워크북 실습 때 켜 둔 개발 서버가 11일째 8000 포트를 잡고 있어서 새 백엔드가 뜨지 않았다.
   `lsof -i :8000`으로 원인을 찾았다.
+- 유리 느낌을 내려고 배경에 색 덩어리를 깔았는데 화면에 전혀 안 보였다. `body`에 불투명한
+  배경색이 있으면 `z-index: -1`인 자식은 그 배경 **뒤**에 그려지기 때문이었다.
+  배경색을 `html`에만 두니 해결됐다.
+- 모바일 화면을 헤드리스 Chrome으로 390px 폭에서 캡처했더니 레이아웃이 넘쳐 보였는데,
+  macOS Chrome이 창 폭을 최소 500px로 강제해 생긴 착시였다. `innerWidth`와 `scrollWidth`를
+  직접 재서 확인했고, 진짜 390px 레이아웃은 그 폭의 iframe에 넣어 확인했다.
 
 ## 참고
 
