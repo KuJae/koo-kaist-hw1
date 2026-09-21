@@ -10,13 +10,32 @@ body {
   margin: 0 auto;
 }
 
-/* ── 소개 페이지로 돌아가는 링크 ──
-   glass.css 의 .pill 과 같은 순위라 로드 순서에 좌우되지 않도록
+/* ── 상단 줄: 돌아가기 링크 + 다크모드 토글 ── */
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+/* glass.css 의 .pill 과 같은 순위라 로드 순서에 좌우되지 않도록
    태그까지 붙여 우선순위를 높인다. */
 a.back {
-  margin-bottom: 22px;
   font-size: 14px;
   color: var(--muted);
+}
+
+.theme-btn {
+  flex-shrink: 0;
+  font-size: 17px;
+  line-height: 1;
+  padding: 10px 14px;
+  cursor: pointer;
+  font-family: inherit;
+}
+.theme-btn:hover {
+  color: var(--accent);
 }
 
 h1 {

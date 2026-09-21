@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { setupThemeToggle } from "./theme.js";
 
 // 백엔드 API 주소. 로컬은 .env, 배포는 Vercel 환경변수에서 읽는다.
 // VITE_ 로 시작하는 변수만 브라우저 코드에 노출된다.
@@ -10,6 +11,10 @@ export default function App() {
   const [status, setStatus] = useState("loading"); // loading | ready | error
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
+  const themeBtn = useRef(null);
+
+  // 소개 페이지와 같은 다크모드 전환 로직을 그대로 쓴다.
+  useEffect(() => { setupThemeToggle(themeBtn.current); }, []);
 
   // 세 함수 모두 실패하면 화면에 이유를 보여 준다.
   // 그냥 두면 백엔드가 잠들었을 때 화면이 빈 채로 멈춘 것처럼 보인다.
@@ -62,7 +67,10 @@ export default function App() {
     <>
     <div className="blob" aria-hidden="true" />
     <div className="wrap">
-      <a className="back pill" href="/">← 개인 소개 페이지로 돌아가기</a>
+      <div className="top-bar">
+        <a className="back pill" href="/">← 개인 소개 페이지로 돌아가기</a>
+        <button ref={themeBtn} className="pill theme-btn" type="button">☾</button>
+      </div>
 
       <h1>📝 메모장</h1>
       <p className="lede">

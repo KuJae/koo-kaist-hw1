@@ -45,8 +45,15 @@
   --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
 
+/* ── 다크 토큰 ───────────────────────────────────────────────
+   두 경우에 걸려야 한다.
+     ① 시스템이 다크이고, 사용자가 라이트를 직접 고르지 않았을 때
+     ② 사용자가 다크를 직접 골랐을 때 (theme.js 가 <html data-theme> 을 붙인다)
+   CSS 에는 이 둘을 한 번에 묶는 문법이 없어 같은 블록을 두 번 쓴다. */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+
     --blob-alpha: 0.4;
     --page-bg: #0b0d12;
 
@@ -70,6 +77,36 @@
   }
 }
 
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  --blob-alpha: 0.4;
+  --page-bg: #0b0d12;
+
+  --glass-bg: rgba(30, 33, 41, 0.56);
+  --glass-bg-strong: rgba(30, 33, 41, 0.74);
+  --glass-brd: rgba(255, 255, 255, 0.14);
+  --glass-sheen: rgba(255, 255, 255, 0.13);
+  --glass-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.04),
+    0 24px 60px -24px rgba(0, 0, 0, 0.75);
+
+  --text: #f2f4f8;
+  --muted: #a7b0bd;
+  --danger: #ff8098;
+
+  --accent: #7fa6ff;
+  --accent-2: #b79cff;
+  --accent-soft: rgba(127, 166, 255, 0.16);
+  --on-accent: #0b0d12;
+}
+
+/* 사용자가 라이트를 직접 고르면 시스템이 다크여도 밝게 */
+:root[data-theme='light'] {
+  color-scheme: light;
+}
+
 /* backdrop-filter 를 지원하지 않는 브라우저에서는 불투명하게 —
    반투명만 남으면 글자가 배경에 묻힌다. */
 @supports not (
@@ -80,10 +117,14 @@
     --glass-bg-strong: rgba(255, 255, 255, 0.97);
   }
   @media (prefers-color-scheme: dark) {
-    :root {
+    :root:not([data-theme='light']) {
       --glass-bg: rgba(30, 33, 41, 0.94);
       --glass-bg-strong: rgba(30, 33, 41, 0.97);
     }
+  }
+  :root[data-theme='dark'] {
+    --glass-bg: rgba(30, 33, 41, 0.94);
+    --glass-bg-strong: rgba(30, 33, 41, 0.97);
   }
 }
 
