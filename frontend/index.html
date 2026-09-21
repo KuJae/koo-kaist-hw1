@@ -11,6 +11,14 @@
     />
     <!-- 색 토큰 · 배경 블롭 · 유리 질감 (메모 앱과 공유) -->
     <link rel="stylesheet" href="/src/glass.css" />
+    <!-- 저장해 둔 테마를 첫 페인트 전에 입힌다.
+         module 스크립트는 defer 라 늦게 실행돼서 화면이 한 번 깜빡인다. -->
+    <script>
+      try {
+        var t = localStorage.getItem('theme')
+        if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t
+      } catch (e) {}
+    </script>
     <style>
       body {
         padding: 64px 20px 80px;
@@ -25,6 +33,31 @@
       header {
         margin-bottom: 30px;
         padding: 0 4px;
+      }
+
+      .head-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 20px;
+      }
+
+      .monogram {
+        width: 72px;
+        height: 72px;
+        border-radius: 50%;
+        box-shadow: 0 10px 26px -12px rgba(110, 139, 255, 0.9);
+      }
+
+      .theme-btn {
+        font-size: 17px;
+        line-height: 1;
+        padding: 10px 14px;
+        cursor: pointer;
+        font-family: inherit;
+      }
+      .theme-btn:hover {
+        color: var(--accent);
       }
 
       .eyebrow {
@@ -97,6 +130,64 @@
         background: var(--accent-soft);
         /* color-mix 를 모르는 브라우저에서는 .pill 기본 테두리가 그대로 남는다 */
         border-color: color-mix(in srgb, var(--accent) 30%, transparent);
+      }
+
+      /* 취미 — 최근 연주곡 */
+      .hobby-lede {
+        margin: -4px 0 16px;
+        color: var(--muted);
+        font-size: 15px;
+      }
+      .repertoire {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .repertoire li {
+        display: flex;
+        align-items: baseline;
+        gap: 14px;
+        padding: 13px 0;
+        border-bottom: 1px solid var(--glass-brd);
+      }
+      .repertoire li:first-child {
+        padding-top: 0;
+      }
+      .repertoire li:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+      }
+      .repertoire .note {
+        flex-shrink: 0;
+        color: var(--accent);
+        font-size: 17px;
+        line-height: 1;
+      }
+      .repertoire .work {
+        flex: 1;
+        min-width: 0;
+      }
+      .repertoire .composer {
+        display: block;
+        font-size: 11.5px;
+        font-weight: 600;
+        letter-spacing: 0.13em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 2px;
+      }
+      .repertoire .title {
+        display: block;
+        font-family: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
+        font-style: italic;
+        font-size: 20px;
+        line-height: 1.3;
+        letter-spacing: -0.01em;
+      }
+      .repertoire .opus {
+        flex-shrink: 0;
+        font-size: 13px;
+        color: var(--muted);
       }
 
       /* 정의 목록 */
@@ -215,6 +306,21 @@
         dt {
           flex: none;
         }
+        .monogram {
+          width: 60px;
+          height: 60px;
+        }
+        .repertoire li {
+          flex-wrap: wrap;
+          gap: 10px;
+        }
+        .repertoire .title {
+          font-size: 18px;
+        }
+        .repertoire .opus {
+          flex-basis: 100%;
+          padding-left: 28px;
+        }
       }
     </style>
   </head>
@@ -223,6 +329,25 @@
 
     <div class="wrap">
       <header>
+        <div class="head-top">
+          <svg class="monogram" viewBox="0 0 72 72" role="img" aria-labelledby="mono-title">
+            <title id="mono-title">강재구 프로필</title>
+            <defs>
+              <linearGradient id="mono-grad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#6e8bff" />
+                <stop offset="1" stop-color="#b06aff" />
+              </linearGradient>
+            </defs>
+            <circle cx="36" cy="36" r="36" fill="url(#mono-grad)" />
+            <text
+              x="36" y="37" text-anchor="middle" dominant-baseline="central"
+              font-size="27" font-weight="700" letter-spacing="1.5" fill="#fff"
+              font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
+            >JK</text>
+          </svg>
+          <button id="theme-btn" class="pill theme-btn" type="button">☾</button>
+        </div>
+
         <span class="eyebrow pill">KAIST 디지털금융MBA</span>
         <h1>강재구 <span class="en">Jaegoo Kang</span></h1>
         <p class="tagline">
@@ -264,6 +389,37 @@
           <span class="pill">클라우드 배포</span>
           <span class="pill">사내 업무 자동화</span>
         </div>
+      </section>
+
+      <section class="card glass">
+        <h2>취미</h2>
+        <p class="hobby-lede">피아노를 칩니다. 최근에 연습한 곡들입니다.</p>
+        <ul class="repertoire">
+          <li>
+            <span class="note" aria-hidden="true">♪</span>
+            <span class="work">
+              <span class="composer">Claude Debussy</span>
+              <span class="title">Clair de Lune</span>
+            </span>
+            <span class="opus">Suite bergamasque</span>
+          </li>
+          <li>
+            <span class="note" aria-hidden="true">♪</span>
+            <span class="work">
+              <span class="composer">William Bolcom</span>
+              <span class="title">Graceful Ghost Rag</span>
+            </span>
+            <span class="opus">Three Ghost Rags</span>
+          </li>
+          <li>
+            <span class="note" aria-hidden="true">♪</span>
+            <span class="work">
+              <span class="composer">Maurice Ravel</span>
+              <span class="title">Sonatine</span>
+            </span>
+            <span class="opus">I. Modéré</span>
+          </li>
+        </ul>
       </section>
 
       <section class="card glass">
@@ -342,5 +498,10 @@
 
       <footer>클라우드컴퓨팅실습 개인과제 · 2026년 9월</footer>
     </div>
+
+    <script type="module">
+      import { setupThemeToggle } from '/src/theme.js'
+      setupThemeToggle(document.getElementById('theme-btn'))
+    </script>
   </body>
 </html>
